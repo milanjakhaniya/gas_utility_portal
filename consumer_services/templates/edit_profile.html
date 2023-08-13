@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/newstyle.css' %}">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'fontawesomefree/js/fontawesome.js' %}"></script>
+    <script src="{% static 'fontawesomefree/js/solid.js' %}"></script>
+    <script src="{% static 'fontawesomefree/js/brands.js' %}"></script>
+
+    <title>Track Service Requests</title>
+
+</head>
+<body class="container">
+    <div style="position: relative;text-align:right;margin:5px 10px 0px 0px;">
+        <button type="button" class="btn btn-dark btn-sm" onclick="location.href='{% url 'logout' %}'">
+            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+          </button>
+    </div>
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{user_form.as_p}}
+            <input class="btn btn-primary" type="submit" value="Update" name="" id="">
+        </form>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{forget_password_form.as_p}}
+            <input class="btn btn-primary" type="submit" value="Update" name="" id="">
+        </form>
+        {% comment %} <button type="button" class="btn btn-dark btn-sm" onclick="location.href='{% url 'change_password' %}'">
+            <i class="fa fa-sign-out" aria-hidden="true"></i> Change Password
+        </button> {% endcomment %}
+    </div>
+
+</body>
+</html>

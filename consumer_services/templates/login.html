@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'fontawesomefree/js/fontawesome.js' %}"></script>
+    <script src="{% static 'fontawesomefree/js/solid.js' %}"></script>
+    <script src="{% static 'fontawesomefree/js/brands.js' %}"></script>
+    
+    <title>Login</title>
+</head>
+<body>
+    <div style="max-width: 400px; margin: 0 auto; padding: 20px; background-color: #f8f8f8; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% comment %} <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="username" class="form-control" id="username" placeholder="name@example.com" name="username">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="name@example.com" name="password">
+            </div> {% endcomment %}
+            <div>
+                <div class="row">
+                    <div class="col-auto" >
+                        <button type="submit" class="btn btn-primary mb-3">Login</button>
+                    </div>
+                    <div class="col-auto row">
+                        <button type="button" class="btn btn-primary mb-3" onclick="location.href='{% url 'register_user' %}'">User Registration</button>
+                        <button type="button" class="btn btn-primary mb-3" onclick="location.href='{% url 'register_representative' %}'">Representative Registration</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

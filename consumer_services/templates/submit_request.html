@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="icon" href="{% static 'css/img/logo.png' %}">
+
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'fontawesomefree/js/fontawesome.js' %}"></script>
+    <script src="{% static 'fontawesomefree/js/solid.js' %}"></script>
+    <script src="{% static 'fontawesomefree/js/brands.js' %}"></script>
+
+    <title>Submit Service Request</title>
+</head>
+<body class="container">
+      <div style="position: relative;text-align:right;margin:5px 10px 0px 0px;">
+        <button type="button" class="btn btn-dark btn-sm" onclick="location.href='{% url 'editProfile' %}'">
+          <i class="fa fa-user" aria-hidden="true"></i> Edit Profile
+        </button>
+        <button type="button" class="btn btn-dark btn-sm" onclick="location.href='{% url 'logout' %}'">
+            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+          </button>
+    </div>
+    <div>
+      <h2 style="text-align:center">Submit Service Request</h2>
+      <form method="post" enctype="multipart/form-data" class="request-form">
+          {% if request_id  %}
+              <div class="alert alert-success" role="alert">
+                  Service request created successfully..!!<br>
+                  Please note following request id to check the status.
+                  Request ID:<br> <strong>{{ request_id | escape }}</strong>
+              </div>
+          
+          {% endif %}
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Submit Request</button>
+          <button type="button" style="background-color: #007BFF; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;"><a href="{% url 'track_request' %}"
+              style="color: white; text-decoration:none">Track Request</a></button>
+      </form>
+    </div>
+</body>
+</html>

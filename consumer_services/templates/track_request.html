@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/newstyle.css' %}">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'fontawesomefree/js/fontawesome.js' %}"></script>
+    <script src="{% static 'fontawesomefree/js/solid.js' %}"></script>
+    <script src="{% static 'fontawesomefree/js/brands.js' %}"></script>
+
+    <title>Track Service Request</title>
+
+</head>
+<body class="container">
+
+    <div style="position: relative;text-align:right;margin:5px 10px 0px 0px;">
+        <button type="button" class="btn btn-dark btn-sm" onclick="location.href='{% url 'editProfile' %}'">
+            <i class="fa fa-user" aria-hidden="true"></i> Edit Profile
+        </button>
+        <button type="button" class="btn btn-dark btn-sm" onclick="location.href='{% url 'logout' %}'">
+            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+          </button>
+    </div>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-primary" value="Track Request"/>
+            <button type="button" class="btn btn-primary" onclick="location.href='{% url 'submit_request' %}'">Raise a request</a></button>
+        </form>
+
+        {% if service_request %}
+            <h2>Request Details</h2>
+            <p>Request Title: {{ service_request.request_title }}</p>
+            <p>Detail: {{ service_request.details }}</p>
+            <p>Status: {{ service_request.request_status }}</p>
+            <p>Submission Date: {{ service_request.submission_date }}</p>
+            <p>Resolution Date: {{ service_request.resolution_date }}</p>
+        {% endif %}
+
+        <h2>
+            All Requests:
+        </h2>
+        <table class="table table-bordered">
+            <tr>
+                <th>Request ID</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Submission Date</th>
+                <th>Resolution Date</th>
+                <th>Attachment</th>
+            </tr>
+            {% for service_request in service_requests %}
+                <tr>
+                    <td>{{service_request.request_id}}</td>
+                    <td>{{service_request.request_title}}</td>
+                    <td>{{service_request.request_status}}</td>
+                    <td>{{service_request.submission_date}}</td>
+                    <td>{{service_request.resolution_date}}</td>
+
+                    {% if service_request.attachment %}
+                    <td><a href="{{ MEDIA_URL }}{{service_request.attachment}}" target="_blank"/>View</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>

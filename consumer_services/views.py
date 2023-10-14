@@ -22,7 +22,6 @@ def register_representative(request):
 
 
 def create_user(request, user_type: UserProfile.UserType):
-    print(request.user)
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -42,7 +41,6 @@ def create_user(request, user_type: UserProfile.UserType):
 
 
 def login(request):
-    print(request.user.username)
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():

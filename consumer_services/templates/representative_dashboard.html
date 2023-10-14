@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +20,7 @@
     <title>Track Service Requests</title>
 
 </head>
+
 <body class="container">
     <div style="position: relative;text-align:right;margin:5px 10px 0px 0px;">
         <button type="button" class="btn btn-dark btn-sm" onclick="location.href='{% url 'editProfile' %}'">
@@ -26,7 +28,7 @@
         </button>
         <button type="button" class="btn btn-dark btn-sm" onclick="location.href='{% url 'logout' %}'">
             <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
-          </button>
+        </button>
     </div>
     <div>
         <h2>
@@ -43,66 +45,79 @@
                 <th>Action</th>
             </tr>
             {% for service_request in service_requests %}
-                <tr>
-                    <td>{{service_request.request_id}}</td>
-                    <td>{{service_request.request_title}}</td>
-                    <td>{{service_request.request_status}}</td>
-                    <td>{{service_request.submission_date}}</td>
-                    {% if service_request.resolution_date %}
+            <tr>
+                <td>{{service_request.request_id}}</td>
+                <td>{{service_request.request_title}}</td>
+                <td>{{service_request.request_status}}</td>
+                <td>{{service_request.submission_date}}</td>
+                {% if service_request.request_status == "In Progress" %}
+                    <td></td>
+                {% elif service_request.request_status == "Resolved" %}
                     <td>{{service_request.resolution_date}}</td>
-                    {% else %}
-                    <td></td>
-                    {% endif %}
+                
+                {% endif %}
 
-                    {% if service_request.attachment %}
-                    <td><a href="{{ MEDIA_URL }}{{service_request.attachment}}" target="_blank"/>View</td>
-                    {% else %}
-                    <td></td>
-                    {% endif %}
-                    
-                    
-                    <td><a class="btn btn-sm btn-primary" data-bs-toggle="modal" href="#exampleModalToggle-{{service_request.request_id}}" role="button">Update Status</a></td>
-                    <div class="modal fade" id="exampleModalToggle-{{service_request.request_id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                        <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
+                {% comment %} {% if service_request.resolution_date %}
+                <td>{{service_request.resolution_date}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}  {% endcomment %}
+
+                {% if service_request.attachment %}
+                <td><a href="{{ MEDIA_URL }}{{service_request.attachment}}" target="_blank" />View</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+
+                <td><a class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                        href="#exampleModalToggle-{{service_request.request_id}}" role="button">Update Status</a></td>
+                <div class="modal fade" id="exampleModalToggle-{{service_request.request_id}}" aria-hidden="true"
+                    aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalToggleLabel">{{service_request.request_title}}</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h5 class="modal-title" id="exampleModalToggleLabel">{{service_request.request_title}}
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <form method="post">
                                 {% csrf_token %}
                                 <div class="modal-body">
-                                    <div>
+                                    <div style="word-break:break-word">
                                         <strong>Details: </strong> {{service_request.details}}
                                     </div>
                                     <div class="mt-3">
-                                        
-                                            {% comment %} {% csrf_token %}
-                                            {{form.as_p}} {% endcomment %}
-                                            <select aria-label="Request Status" class="form-select" name="request_status">
-                                                {% for k, v in choices %}
-                                                    {% if k == service_request.request_status %}
-                                                    <option value="{{ k }}" selected>{{k}}</option>
-                                                    {% else %}
-                                                    <option value="{{ k }}">{{k}}</option>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </select>
-                                            <input type="hidden" name="request_id" id="id_request_id" value="{{service_request.request_id}}">
-                                        
+
+                                        {% comment %} {% csrf_token %}
+                                        {{form.as_p}} {% endcomment %}
+                                        <select aria-label="Request Status" class="form-select" name="request_status">
+                                            {% for k, v in choices %}
+                                            {% if k == service_request.request_status %}
+                                            <option value="{{ k }}" selected>{{k}}</option>
+                                            {% else %}
+                                            <option value="{{ k }}">{{k}}</option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <input type="hidden" name="request_id" id="id_request_id"
+                                            value="{{service_request.request_id}}">
+
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Update</button>
+                                    <button type="submit" class="btn btn-primary" data-bs-target="#exampleModalToggle2"
+                                        data-bs-toggle="modal" data-bs-dismiss="modal">Update</button>
                                 </div>
                             </form>
-                          </div>
                         </div>
-                      </div>
-                </tr>
+                    </div>
+                </div>
+            </tr>
             {% endfor %}
         </table>
     </div>
 
 </body>
+
 </html>

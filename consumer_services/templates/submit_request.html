@@ -42,8 +42,8 @@
           {% endif %}
           {% csrf_token %}
           {{ form.as_p }}
-          <button type="submit">Submit Request</button>
-          <button type="button" style="background-color: #007BFF; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;"><a href="{% url 'track_request' %}"
+          <button type="submit" class="btn btn-primary">Submit Request</button>
+          <button type="button" class="btn btn-primary" ><a href="{% url 'track_request' %}"
               style="color: white; text-decoration:none">Track Request</a></button>
       </form>
     </div>
